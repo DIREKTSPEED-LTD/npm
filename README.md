@@ -1,3 +1,21 @@
+# THIS REPO IS DEPRECATED in  FAVOR of 
+
+THIS DOCKERFILE:
+~~~
+FROM node:5.6
+# workaround for this: https://github.com/npm/npm/issues/9863
+# Discussed in https://github.com/npm/npm/pull/10805
+MAINTAINER Frank Lemanschik <frank@dspeed.eu>
+WORKDIR /usr/local/lib/node_modules/npm
+RUN npm install --save fs-extra
+RUN sed -i s/graceful-fs/fs-extra/g /usr/local/lib/node_modules/npm/lib/utils/rename.js
+RUN sed -i s/fs.rename/fs.move/g /usr/local/lib/node_modules/npm/lib/utils/rename.js
+WORKDIR /app
+#...... main part of the Dockerfile greetings.
+~~~
+IT APPLYS THE PATCH TO ANY IN NPM VERSION >3 without the need to merge this REPO
+
+
 npm(1) -- a JavaScript package manager
 ==============================
 [![Build Status](https://img.shields.io/travis/npm/npm/master.svg)](https://travis-ci.org/npm/npm)
